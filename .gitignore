@@ -1,0 +1,17 @@
+# Sensitive data / secrets
+.env
+data/*
+combined.yaml
+*.db
+
+# Big unnecessary dirs & files
+
+node_modules
+*.lock
+*/Cargo.lock
+cache
+out
+target
+broadcast
+package-lock.json
+go.sum

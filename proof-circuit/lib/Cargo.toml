@@ -1,0 +1,16 @@
+[package]
+name = "mdl_verification_lib"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+alloy-sol-types = { workspace = true }
+p256 = { version = "0.13.0", features = ["jwk"] }
+jwt-compact = { path = "../../jwt-compact-patch", features = ["p256"] }
+chrono = "0.4.38"
+serde = { version = "1.0.210", features = ["derive"] }
+hex = "0.4.3"
+elliptic-curve = { version = "0.13.8", features = ["jwk", "arithmetic"] }
+base64 = "0.22.1"
+alloy-primitives = { version = "0.8.5", features = ["serde"]}
+ecdsa = { workspace = true }

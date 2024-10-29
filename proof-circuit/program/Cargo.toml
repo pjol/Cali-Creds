@@ -1,0 +1,15 @@
+[package]
+version = "0.1.0"
+name = "mdl_verification_program"
+edition = "2021"
+
+[dependencies]
+alloy-sol-types = { workspace = true }
+alloy-core = { workspace = true }
+mdl_verification_lib = { path = "../lib" }
+jwt-compact = { git = "https://github.com/pjol/jwt-compact-patch.git", features = ["p256"], branch = "master"}
+sp1-zkvm = { version = "2.0.0" }
+sp1-lib = { version = "2.0.0"}
+alloy-primitives = { version = "0.8.7", features = ["serde"]}
+
+

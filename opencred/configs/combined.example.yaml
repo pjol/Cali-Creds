@@ -1,0 +1,123 @@
+# Copyright 2023 - 2024 California Department of Motor Vehicles
+# Copyright 2023 - 2024 Digital Bazaar, Inc.
+#
+# SPDX-License-Identifier: BSD-3-Clause
+
+app:
+  server:
+    baseUri: https://e932-157-131-203-14.ngrok-free.app
+  mongodb:
+    url: mongodb://127.0.0.1:27017/opencred
+  opencred:
+    caStore:
+      - pem: |
+          -----BEGIN CERTIFICATE-----
+          -----END CERTIFICATE-----
+      - pem: |
+          -----BEGIN CERTIFICATE-----
+          -----END CERTIFICATE-----
+    signingKeys:
+      - type: ES256
+        id: 155bf9e451547e27d258b99aaafdbf5f23a264a6dfcfb832c9a1abd02126420c
+        privateKeyPem: |
+          -----BEGIN PRIVATE KEY-----
+          -----END PRIVATE KEY-----
+        publicKeyPem: |
+          -----BEGIN PUBLIC KEY-----
+          -----END PUBLIC KEY-----
+        purpose:
+          - id_token
+          - authorization_request
+    relyingParties:
+      - name: "Test Relying Party (Native)"
+        clientId: "rp1"
+        clientSecret: "DeepestAndDarkest"
+        description: "Relying Party Test App"
+        primaryLogo: "https://placekitten.com/200/200"
+        primaryLink: "https://e932-157-131-203-14.ngrok-free.app"
+        secondaryLogo: "https://placekitten.com/200/200"
+        secondaryLink: "https://example2.com"
+        homeLink: "https://e932-157-131-203-14.ngrok-free.app"
+        explainerVideo:
+          id: "<YOUTUBE ID>"
+          provider: youtube
+        backgroundImage: "https://placekitten.com/800/200"
+        redirectUri: "https://www.google.com"
+        idTokenExpirySeconds: 3600
+        claims:
+          - name: "dl_number"
+            path: "driversLicense.document_number"
+        brand:
+          cta: "#0B669D"
+          primary: "#045199"
+          header: "#0979c4"
+        scopes:
+          - name: "openid"
+            description: "Open ID Connect"
+        workflow:
+          type: native
+          id: testtest
+          initialStep: default
+          steps:
+            default:
+              callback:
+                url: https://910f-108-91-116-180.ngrok-free.app/callback
+              createChallenge: true
+              verifiablePresentationRequest: >
+                {
+                  "query": {
+                    "type": "QueryByExample",
+                    "credentialQuery": {
+                      "reason": "Please present your VC.",
+                      "example": {
+                        "type": [
+                          "Iso18013DriversLicenseCredential"
+                        ]
+                      }
+                    }
+                  }
+                }
+              constraintsOverride: >
+                {
+                  "fields": [
+                    {
+                      "path": [
+                        "$.vc.type"
+                      ],
+                      "filter": {
+                        "type": "string",
+                        "pattern": "Iso18013DriversLicenseCredential"
+                      }
+                    }
+                  ]
+                }
+    options:
+      exchangeProtocols:
+        - openid4vp
+        - chapi
+    defaultBrand:
+      cta: "#0B669D"
+      primary: "#045199"
+      header: "#0979c4"
+    defaultLanguage: en
+    translations:
+      en:
+        qrTitle: Login with your Wallet app
+        qrPageExplain: Scan the following QR Code using the Wallet app on your phone.
+        qrPageExplainHelp: (<a href="https://youtube.com">How do I do it?</a>)
+        qrFooter: "Note: Already on your phone with the Wallet app? Open the Wallet app, then come back and tap on the QR code above."
+        qrFooterHelp: Difficulty using the Wallet app to login? revert to using password <a href="#">here</a>
+        qrDisclaimer: If you don't have a Wallet app download it from the app store.
+        qrExplainerText: (How do I do it?)
+        openid4vpAnotherWay: "Scan a QR code"
+        chapiPageAnotherWay: "Looking for a QR code to scan with your wallet app instead?"
+        loginCta: "Login with your credential wallet"
+        loginExplain: "To login with your credential wallet, you will need to have the credential wallet app <with configurable URL to app stores> installed"
+        appInstallExplain: "If you don't have a credential wallet yet, you can get one by downloading the credential wallet app <with configurable URL to app stores>"
+        appCta: "Open wallet app"
+        copyright: "Powered by OpenCred"
+        pageTitle: "Login"
+        home: "Home"
+        verificationSuccess: Success!
+    didWeb:
+      mainEnabled: true
